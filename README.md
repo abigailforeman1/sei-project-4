@@ -98,6 +98,7 @@ When a new user registers, their information is saved to the jwt_auth user model
 ## My contributions
 
 1. Django backend models
+
 I focused on building the backend of our app using Python and Django REST framework. We originally planned to build 4 models for the user, businesses, interview questions and comments, and we created the ERD below to help us distingush the relationships between them. This made it easier to visualise our database and realise that we didn't need to build all 4 models.
 
 ![screenshot of ERD](https://github.com/abigailforeman1/sei-project-4/blob/master/frontend/src/assets/database.png)
@@ -119,6 +120,7 @@ class User(AbstractUser):
 ```
 
 2. Frontend profile page 
+
 Another part of the app that I focused on was the users profile page and edit page. This required multiple get requests to the database some checks to see if the user had saved both businesses to their user model. If there was none of only one then that section of the profile page won't render.
 
 ```javascript
