@@ -49,19 +49,19 @@ Interview Story is an interactive choice-based game where users can immersively 
 
 The user lands on the homepage where they are encouraged to register or login to play. The only feature they can explore before logging in is the connect page where they can browse other users and their game choices. Once registered users will be given a personal profile page ready to customise.
 
-[screenshot of homepage](https://github.com/abigailforeman1/sei-project-4/blob/master/frontend/src/assets/codehome.png)
+![screenshot of homepage](https://github.com/abigailforeman1/sei-project-4/blob/master/frontend/src/assets/codehome.png)
 
 2. Start your story
 
 The main premise of our website is the immersive interview story. Users are guided through a series of realistic events via our pre-written story with different choices and outcomes. The first 2 scenarios require the user to pick an outfit for their interview and a hot drink from the cafe. The choices they make get sent to our Django database with a patch request so that they can check them out later.
 
-[screenshot of first story](https://github.com/abigailforeman1/sei-project-4/blob/master/frontend/src/assets/wakeup.png)
+![screenshot of first story](https://github.com/abigailforeman1/sei-project-4/blob/master/frontend/src/assets/wakeup.png)
 
-[screenshot of second story](https://github.com/abigailforeman1/sei-project-4/blob/master/frontend/src/assets/nearlytime.png)
+![screenshot of second story](https://github.com/abigailforeman1/sei-project-4/blob/master/frontend/src/assets/nearlytime.png)
 
 We built parts of the story so that the outcome is decided by luck (or a Math.random function more specifically!) This meant that for a number of the story pages, there were 2 options for the user to choose from, but each of those had a positive and a negative outcome. This made it more exciting and unpredictable. 
 
-[screenshot of third story](https://github.com/abigailforeman1/sei-project-4/blob/master/frontend/src/assets/choice.png)
+![screenshot of third story](https://github.com/abigailforeman1/sei-project-4/blob/master/frontend/src/assets/choice.png)
 
 3. Connect
 
