@@ -63,9 +63,38 @@ We built parts of the story so that the outcome is decided by luck (or a Math.ra
 
 ![screenshot of third story](https://github.com/abigailforeman1/sei-project-4/blob/master/frontend/src/assets/choice.png)
 
+The interview questions section of the story was built with one React component that sets state to the next question every time the user clicks the next button and uses their overall score to determine which final component to render.
+
+![screenshot of interview](https://github.com/abigailforeman1/sei-project-4/blob/master/frontend/src/assets/interview.png)
+
+```javascript
+  handleGuess = e => {
+    if (this.state.playerGuess) return
+    let playerGuess = ''
+    let score = this.state.score
+    if (e.target.textContent === this.state.questionObj.correctAnswer) {
+      playerGuess = 'Correct'
+      score += 1
+    } else {
+      playerGuess = 'Incorrect'
+    }
+    this.setState({ playerGuess, score })
+  }
+```
+
 3. Connect
 
+Once you have finished your interview journey, you can browse other users profiles and see what choices they made.
+
+![screenshot of connect page](https://github.com/abigailforeman1/sei-project-4/blob/master/frontend/src/assets/connect.png)
+
+
 4. Profile - and profile edit 
+
+When a new user registers, their information is saved to the jwt_auth user model in our Django database. This is then used to populate their profile page. When the current logged in user clicks on their own profile, they see an edit button which can be used to update more information to their profile including a profile image using Cloudinary.
+
+![screenshot of profile page](https://github.com/abigailforeman1/sei-project-4/blob/master/frontend/src/assets/profile.png)
+
 
 ## My contributions
 
