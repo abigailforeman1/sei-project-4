@@ -24,7 +24,7 @@ Build a full-stack application with React, Django and Python.
 * https://www.quickdatabasediagrams.com/
 
 ## Deployment:
-This app has been deployed on Heroku and can be found here: interview-story-project4.herokuapp.com
+This app has been deployed on Heroku and can be found here: https://interview-story-project4.herokuapp.com
 
 ## Getting started:
 Use the clone button to download the source code. In the terminal enter the following commands:
