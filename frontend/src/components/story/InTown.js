@@ -7,6 +7,7 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 
 import Auth from '../../lib/auth'
+import { headers } from '../../lib/headers'
 
 class InTown extends React.Component {
   state = {
@@ -31,6 +32,7 @@ class InTown extends React.Component {
     }
   }
 
+  // save second chosenBusinesses into the array without over writting the current business - we do this by spreading the user AND spreading the previous businesses array and adding the current business id 
   handleClick = (e) => {
     let clicked = this.state.clicked
     const id = e.target.name
@@ -45,13 +47,12 @@ class InTown extends React.Component {
     }
   }
 
+  // must send cookie with this -- it comes through with the headers function 
   handleSubmit = async (e) => {
     e.preventDefault()
     const payload = Auth.getPayload().sub
     try {
-      await axios.patch(`api/users/${payload}/`, { ...this.state.user }, {
-        headers: { Authorization: `Bearer ${Auth.getToken()}` }
-      })
+      await axios.patch(`api/users/${payload}/`, { ...this.state.user }, headers(true))
       this.props.history.push('/roadworks')
     } catch (err) {
       this.props.history.push('/notfound')
@@ -59,6 +60,7 @@ class InTown extends React.Component {
   }
 
   render() {
+    console.log(this.state.user.businesses)
     const { clicked } = this.state
     return (
       <header className="intown-masthead masthead">

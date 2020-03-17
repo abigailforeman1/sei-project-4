@@ -7,6 +7,7 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 
 import Auth from '../../lib/auth'
+import { headers } from '../../lib/headers'
 
 
 class WakeUp extends React.Component {
@@ -32,6 +33,7 @@ class WakeUp extends React.Component {
     }
   }
 
+  // here we are updating the user model in state with their first chosenBusiness - we do this by spreading the current user saved in state and adding on the id of the current chosenBusiness to this user model
   handleClick = (e) => {
     let clicked = this.state.clicked
     const id = e.target.name
@@ -46,13 +48,15 @@ class WakeUp extends React.Component {
     }
   }
 
+  // our patch request now isn't working - when you click on your chosen business it gets added to the user 
+  // model in state BUT when you click the button to take you to the next page it doesn't carry this forward - the user model goes back to having
+  // no businesses saved to them ---- this was working before with the patch request but isn't anymore since adding the headers(true) function to sort
+  // out the CSRF cookie issue. 
   handleSubmit = async (e) => {
     e.preventDefault()
     const payload = Auth.getPayload().sub
     try {
-      await axios.patch(`api/users/${payload}/`, { ...this.state.user }, {
-        headers: { Authorization: `Bearer ${Auth.getToken()}` }
-      })
+      await axios.patch(`api/users/${payload}/`, { ...this.state.user }, headers(true))
       this.props.history.push('/intown')
     } catch (err) {
       this.props.history.push('/notfound')
@@ -60,6 +64,7 @@ class WakeUp extends React.Component {
   }
 
   render() {
+    console.log(this.state.user)
     if (!this.state.user) return null
     const { clicked } = this.state
     return (

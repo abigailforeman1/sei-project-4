@@ -43,7 +43,7 @@ const UserForm = ({ data, handleChange, handleSubmit, handleChangeImage }) => {
         <Form.Label>Second Name</Form.Label>
         <Form.Control
           placeholder="Second Name"
-          name="second_name"
+          name="last_name"
           onChange={handleChange}
           value={data.last_name}
         />

@@ -21,6 +21,7 @@ class Profile extends React.Component {
     const payload = Auth.getPayload().sub
     try {
       const res = await axios.get(`/api/users/${payload}`)
+      console.log(res.data)
       this.setState({ user: res.data })
       if (res.data.businesses.length === 2) {
         return this.getBusinesses()

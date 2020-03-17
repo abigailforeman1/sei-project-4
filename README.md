@@ -1,6 +1,76 @@
-# sei-project-4
+![ga_cog_large_red_rgb](https://cloud.githubusercontent.com/assets/40461/8183776/469f976e-1432-11e5-8199-6ac91363302b.png)
 
-The idea behind the project:
+# General Assembly Project 4: Interview Story
+
+## Goal:
+Build a full-stack application with React, Django and Python.
+
+## Timeframe:
+8 days
+
+## Team mates:
+* [Astara Cambata](https://github.com/astara303)
+
+## Technologies used:
+* HTML5
+* SCSS & Bootstrap
+* JavaScript
+* React.js
+* Python
+* Django Rest Framework
+* Insomnia
+* GitHub
+* Cloudinary
+* https://www.quickdatabasediagrams.com/
+
+## Deployment:
+This app has been deployed on Heroku and can be found here: interview-story-project4.herokuapp.com
+
+## Getting started:
+Use the clone button to download the source code. In the terminal enter the following commands:
+
+```
+<!— To install all the packages listed in the package.json: —> $ yarn 
+<!- Navigate into the shell -> $ pipenv shell
+<!— Run the app on localhost:8000 : —> $ python manage.py runserver
+<!— Check the console for any issues and if there are any then check the package.json for any dependancies missing —>
+<!- Navigate to http://localhost:8000/>
+```
+
+## Brief:
+Either in pairs or solo, we had 1 week to build a full-stack application by making our own React front-end and our own backend using a Python Django API using Django REST Framework to serve our data from a Postgres database.
+
+This was my fourth and final project while on General Assembly’s SEI course.
+
+## User experience:
+Interview Story is an interactive choice-based game where users can immersively take part in a junior coding interview from the moment they wake up to finding out if they were successful or not. The choices they make along the way are saved to the backend database for use on their frontend profile.
+
+1. Homepage, register & login
+
+The user lands on the homepage where they are encouraged to register or login to play. The only feature they can explore before logging in is the connect page where they can browse other users and their game choices. Once registered users will be given a personal profile page ready to customise.
+
+[screenshot of homepage]()
+
+2. Start your story
+
+3. Connect
+
+4. Profile - and profile edit 
+
+## My contributions
+
+1. Django backend models - add database diagram
+While Astara took on most of the frontend functionality, I built out the backend using Python and Django REST framework.
+
+2. Profile - and profile edit 
+
+3. Styling
+
+## Challenges and future improvements:
+
+
+
+
 
 
 

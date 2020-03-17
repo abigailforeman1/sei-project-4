@@ -23,10 +23,11 @@ class ProfileEdit extends React.Component {
   }
 
   // on componentDidMount we’re getting the data from the current user and setting it to state 
-  async componentDidMount() {
+  componentDidMount = async () => {
     const payload = Auth.getPayload().sub
     try {
-      const res = await axios.get(`/api/users/${payload}/`)
+      const res = await axios.get(`/api/users/${payload}`)
+      console.log(res)
       this.setState({ data: res.data })
     } catch (err) {
       this.props.history.push('/notfound')
