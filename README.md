@@ -63,7 +63,7 @@ We built parts of the story so that the outcome is decided by luck (or a Math.ra
 
 ![screenshot of third story](https://github.com/abigailforeman1/sei-project-4/blob/master/frontend/src/assets/choice.png)
 
-The interview questions section of the story was built with one React component that sets state to the next question every time the user clicks the next button and uses their overall score to determine which final component to render.
+The interview questions section of the story was built with one React component that sets state to the next question every time the user clicks the next button and uses their overall score to determine which final component to render. The player must pass with a score of 4 in order to have a successful interview, meaning that they can miss out on the luck points but still pass if they answer every question correctly. Conversely, they can miss up to 2 interview questions but still pass if they had good luck.
 
 ![screenshot of interview](https://github.com/abigailforeman1/sei-project-4/blob/master/frontend/src/assets/interview.png)
 
@@ -89,45 +89,102 @@ Once you have finished your interview journey, you can browse other users profil
 ![screenshot of connect page](https://github.com/abigailforeman1/sei-project-4/blob/master/frontend/src/assets/connect.png)
 
 
-4. Profile - and profile edit 
+4. Profile
 
 When a new user registers, their information is saved to the jwt_auth user model in our Django database. This is then used to populate their profile page. When the current logged in user clicks on their own profile, they see an edit button which can be used to update more information to their profile including a profile image using Cloudinary.
 
 ![screenshot of profile page](https://github.com/abigailforeman1/sei-project-4/blob/master/frontend/src/assets/profile.png)
 
-
 ## My contributions
 
-1. Django backend models - add database diagram
-While Astara took on most of the frontend functionality, I built out the backend using Python and Django REST framework.
+1. Django backend models
+I focused on building the backend of our app using Python and Django REST framework. We originally planned to build 4 models for the user, businesses, interview questions and comments, and we created the ERD below to help us distingush the relationships between them. This made it easier to visualise our database and realise that we didn't need to build all 4 models.
 
-2. Profile - and profile edit 
+![screenshot of ERD](https://github.com/abigailforeman1/sei-project-4/blob/master/frontend/src/assets/profile.png)
+
+We ended up just building a businesses model from scratch and using Django's abstract jwt_auth user model but adding some of our own functionality. We added the businesses model onto the user model with a many to many relationship so that we could populate the users with their chosen businesses and eventually display this on the users profile.
+
+```javascript
+class User(AbstractUser):
+    email = models.CharField(max_length=40, unique=True)
+    profile_image = models.CharField(max_length=500, null= True, blank=True)
+    location = models.CharField(max_length=100, null=True, blank=True)
+    privacy = models.BooleanField(default=True)
+    looking_for_work = models.BooleanField(default=True)
+    website = models.CharField(max_length=200, null=True, blank=True)
+    businesses = models.ManyToManyField('businesses.Business', related_name='user', blank=True)
+
+    def __str__(self):
+      return self.email
+```
+
+2. Frontend profile page 
+Another part of the app that I focused on was the users profile page and edit page. This required multiple get requests to the database some checks to see if the user had saved both businesses to their user model. If there was none of only one then that section of the profile page won't render.
+
+```javascript
+  componentDidMount = async () => {
+    const payload = Auth.getPayload().sub
+    try {
+      const res = await axios.get(`/api/users/${payload}`)
+      console.log(res.data)
+      this.setState({ user: res.data })
+      if (res.data.businesses.length === 2) {
+        return this.getBusinesses()
+      } else {
+        return
+      }
+    } catch (err) {
+      this.props.history.push('/notfound')
+    }
+  }
+```
+
+For the profile edit page, I made a get request to the database to retrieve the users information already stored and set state with this. I then built a user edit form and refactored this out into a seperate functional React component. When the user clicks the update button, a patch request is sent to the database so that only the updated fields are targeted, along with a header and bearer token for authentication. I also created handleChange functions that set state when ever a change event occured.
+
+```javascript
+  componentDidMount = async () => {
+    const payload = Auth.getPayload().sub
+    try {
+      const res = await axios.get(`/api/users/${payload}`)
+      this.setState({ data: res.data })
+    } catch (err) {
+      this.props.history.push('/notfound')
+    }
+  }
+
+  handleChange = (e) => {
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    const data = { ...this.state.data, [e.target.name]: value }
+    this.setState({ data })
+  }
+
+  handleSubmit = async (e) => {
+    e.preventDefault()
+    const payload = Auth.getPayload().sub
+    try {
+      const res = await axios.patch(`/api/users/${payload}/edit`, { ...this.state.data }, {
+        headers: { Authorization: `Bearer ${Auth.getToken()}` }
+      })
+      this.props.history.push(`/profile/${payload}`)
+    } catch (err) {
+      this.props.history.push('/notfound')
+    }
+  }
+
+  handleChangeImage = ({ target: { name, value } }) => {
+    const newValue = value
+    const data = { ...this.state.data, [name]: newValue }
+    this.setState({ data })
+  }
+```
 
 3. Styling
 
+I enjoyed illustrating all the cartoons for this project and putting a personal touch on it. We also used Bootstrap for the styling framework which was new for both of us and fun to play around with. 
+
 ## Challenges and future improvements:
 
-
-
-
-
-
-
-Django backend:
 Manipulating django's abract user model proved to be a challenge.
 When making a "put" request onto the user model, we ran into a 422 error (unprocessable entity). It was requiring that the user username, email, password and password confirmation be resent. We did not want to insert a prompt midway through a game to ask for password and password confirmation, so we added context= "is_create" onto the user validation serializer that only required password and password confirmation on creation. We then added this context to the updated_user data that we sent in a patch request instead of a put request. We then added partial = true on the updated_user in order to forego the email and username information it was requesting.
 
-React frontend:
-We had to form a better understanding of spreading in order to send this patch request through on the front end to the correct part of the user model where we wanted to store the information (one business pk in the businesses array)
-
-We had a serializer to populate the business model information when the user model is called for quick access to the business information when rendering the user profile. But this created an issue when trying to add more than one business to the businesses array on the user model. The view we had written for the patch request was expect a pk, not an object, so when we tried to send through the second pk, the first had populated as an object, and because we had spread the previous user information into state to re-send in the patch request, we were sending an array of one object and one pk. Django didn't like that! So we removed the serializer to populate the business model, and make a get request to the businesses url with the index of the businesses, taken from the user's array of businesses that held the pk of the business.
-
-For the story, we originally only had one choice (with four results), which would spawn a particular button that would link to the corresponding page, and that page held the corresponding "luck score" in state. This was then passed down as a prop when we rendered the subsequent page within the page that the choice is made. 
-This ended up changing when we added in an additional choice (with an additional four results) and decided to pass the score down as a prop from the beginning. But for the first choice, we pass through a score and text to the same page, simply displaying that text passed as a prop, making the page appear to be different when you made different choices. For the next choice, however, we passed down the score as a prop but needed more story text, so we did link through to four different pages depending on your second choice. From here, you begin your interview, which is rendered within the page and the score passed down to as a prop.
-
-For the score, the player can accrue a maximum of 6 points: 2 from luck and 4 from the interview. The player must pass with a score of 4 in order to have a successful interview, meaning that they can miss out on the luck points but still pass if they answer every question correctly. Conversely, they can miss up to 2 interview questions but still pass if they had good luck. We feel that this game model accurately describes the sensation that many job-hunters experience, which is that landing your perfect job can take luck as much as skill.
-
-Additional functionality:
-The ability for users to leave comments on another user's page
-Hide users from the search index if they check "privacy" as true on their profile edit page
-use latitude and longitude of businesses to be able to display (using mapbox) their locations
+Additional functionality that we plan to add is the ability for users to leave comments on another user's page, hide users from the search index if they check "privacy" as true on their profile edit page, and use latitude and longitude of businesses to be able to display (using mapbox) their locations.
