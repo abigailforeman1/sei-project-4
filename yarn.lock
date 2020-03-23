@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+acorn@^7.1.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.1.1.tgz#e35668de0b402f359de515c5482a1ab9f89a69bf"
+  integrity sha512-add7dgA5ppRPxCFJoAGfMDi7PIBXq1RtGo7BhbLaxwrXPOmw8gq48Y9ozT01hUKy9byMjlR20EJhu5zlkErEkg==
+
 django@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/django/-/django-1.0.0.tgz#e90c7b91b8681555317545ba8ea69bc8a0a148c8"
