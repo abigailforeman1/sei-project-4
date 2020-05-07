@@ -184,6 +184,15 @@ For the profile edit page, I made a get request to the database to retrieve the 
 
 I enjoyed illustrating all the cartoons for this project and putting a personal touch on it. We also used Bootstrap for the styling framework which was new for both of us and fun to play around with. 
 
+## Key learnings:
+1. The versatility of using Boolean logic
+
+The use of Boolean's answered a lot of problems in our project. One fun use was randomly deciding whether our player's luck was true or false, and this determining which path of the story they take.  
+
+2. Using React to build a game 
+
+This project demonstrated how perfectly suited React is for building a multiple choice game or quiz. We were able to store the interview questions and their multiple choice answers in state and use this data when needed. We could also easily pass through the players score as props to other components of the project and use this to find their outcome of the game.
+
 ## Challenges and future improvements:
 
 Manipulating django's abract user model proved to be a challenge.
